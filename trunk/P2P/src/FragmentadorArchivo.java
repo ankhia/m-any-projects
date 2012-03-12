@@ -1,12 +1,12 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 
 public class FragmentadorArchivo {
 
-	int[] puertos = P2P.puertos;
-	int puerto;
+	private int[] puertos = P2P.puertos;
+	
+	private int puerto;
 	
 	public FragmentadorArchivo(int puerto) {
 		this.puerto = puerto;
@@ -43,7 +43,5 @@ public class FragmentadorArchivo {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
 }

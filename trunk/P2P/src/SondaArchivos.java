@@ -1,21 +1,24 @@
-import java.util.HashSet;
-import java.util.Set;
 
 
-public class SondaArchivos {
-	int[] puertos = P2P.puertos;
+public class SondaArchivos
+{
+	private  int[] puertos = P2P.puertos;
 	
+	private String archivos;
 	
-	Set<String> listaArchivos;
-	boolean estaSondeando;
-	int peticionesPendientes;
+	private boolean estaSondeando;
 	
-	public SondaArchivos() {
+	private int peticionesPendientes;
+	
+	private int puerto;
+	
+	public SondaArchivos(int puerto) {
+		this.puerto = puerto;
+		archivos= "";
 		limpiarSonda();
 	}
 	
 	public void limpiarSonda(){
-		listaArchivos = new HashSet<String>();
 		estaSondeando = false;
 		peticionesPendientes = 0;
 	}
@@ -25,30 +28,15 @@ public class SondaArchivos {
 		estaSondeando = true;
 		peticionesPendientes = puertos.length;
 		for( Integer puerto : puertos ){
-			new Cliente("localhost", puerto, P2P.CONSULTAR_LISTA_ARCHIVOS );
+			new Cliente("localhost", this.puerto, "localhost", puerto, P2P.CONSULTAR_LISTA_ARCHIVOS );
 		}
 	}
 	
-	public void recibirPeticion( Set<String> archivos ){
-		listaArchivos.addAll(archivos);
+	public void recibirPeticion( String archivos ){
+		this.archivos += archivos+";1";
 		peticionesPendientes--;
-		if( peticionesPendientes == 0 ){
+		if( peticionesPendientes == 0 )
 			estaSondeando = false;
-		}
-	}
-
-	/**
-	 * @return the listaArchivos
-	 */
-	public Set<String> getListaArchivos() {
-		return listaArchivos;
-	}
-
-	/**
-	 * @param listaArchivos the listaArchivos to set
-	 */
-	public void setListaArchivos(Set<String> listaArchivos) {
-		this.listaArchivos = listaArchivos;
 	}
 
 	/**
@@ -57,25 +45,13 @@ public class SondaArchivos {
 	public boolean isEstaSondeando() {
 		return estaSondeando;
 	}
-
+	
 	/**
-	 * @param estaSondeando the estaSondeando to set
+	 * 
+	 * @return archivos
 	 */
-	public void setEstaSondeando(boolean estaSondeando) {
-		this.estaSondeando = estaSondeando;
+	public String getArchivos(){
+		return this.archivos;
 	}
 
-	/**
-	 * @return the peticionesPendientes
-	 */
-	public int getPeticionesPendientes() {
-		return peticionesPendientes;
-	}
-
-	/**
-	 * @param peticionesPendientes the peticionesPendientes to set
-	 */
-	public void setPeticionesPendientes(int peticionesPendientes) {
-		this.peticionesPendientes = peticionesPendientes;
-	}
 }

@@ -1,69 +1,81 @@
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Iterator;
 import java.util.Set;
 
 
 public class Cliente implements Runnable {
 
-	String host = "localhost";
-	int puerto;
-	String tarea;
-	Paquete paquete;
-	Set<String> archivos;
+	private String hostOrigen = "localhost";
 	
-	public Cliente( String host, int puerto, String tarea ) {
-		this.host = host;
-		this.puerto = puerto;
+	private int puertoOrigen;
+	
+	private String hostDestino;
+	
+	private int puertoDestino;
+	
+	private String tarea;
+	
+	private Paquete paquete;
+	
+	private Set<String> archivos;
+	
+	public Cliente( String hostOrigen, int puertoOrigen,String hostDestino, int puertoDestino, String tarea ) {
+		this.hostOrigen = hostOrigen;
+		this.puertoOrigen = puertoOrigen;
+		this.hostDestino = hostDestino;
+		this.puertoDestino = puertoDestino;
 		this.tarea = tarea;
+		new Thread(this).start();
 	}
 	
 	public Cliente( String host, int puerto, String tarea, Paquete paquete ) {
-		this.host = host;
-		this.puerto = puerto;
+		this.hostDestino = host;
+		this.puertoDestino = puerto;
 		this.tarea = tarea;
 		this.paquete = paquete;
 		new Thread(this).start();
 	}
 	
 	public Cliente( String host, int puerto, String tarea, Set<String> archivos ) {
-		this.host = host;
-		this.puerto = puerto;
+		this.hostDestino = host;
+		this.puertoDestino = puerto;
 		this.tarea = tarea;
 		this.archivos = archivos;
 		new Thread(this).start();
 	}
 
-	@Override
 	public void run() {
 		try {
-			Socket socket = new Socket( host, puerto );
-			PrintWriter pw = new PrintWriter(socket.getOutputStream());
-			pw.println(tarea);
-			pw.flush();
+			Socket socket = new Socket( hostDestino, puertoDestino);
+			Data d = new Data();
+			d.setTarea(tarea);
 			
 			if( tarea.equals(P2P.INSERTAR_ARCHIVO)  ){
-				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-				oos.writeObject(paquete);
-				oos.flush();
+				d.setPaquete(paquete);
 			}
 			else if( tarea.equals(P2P.CONSULTAR_LISTA_ARCHIVOS) ){
-				pw = new PrintWriter(socket.getOutputStream());
-				pw.println("localhost");
-				pw.println(puerto);
-				pw.flush();
+				d.setHostRespuesta(hostOrigen);
+				d.setPuertoRespuesta(puertoOrigen);
 			}
 			else if( tarea.equals(P2P.RECIBIR_LISTA_ARCHIVOS) ){
-				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-				oos.writeObject(archivos);
-				oos.flush();
+				StringBuilder sb = new StringBuilder();
+				for(Iterator it = archivos.iterator(); it.hasNext();){
+					String s = (String) it.next();
+					sb.append(s);
+					sb.append(";");
+				}
+				d.setInformacionAdicional(sb.toString());
 			}
-			pw.close();
+			System.out.println(puertoDestino +" Envio " + d);
+			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+			oos.writeObject(d);
+			oos.flush();
+			
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
 }

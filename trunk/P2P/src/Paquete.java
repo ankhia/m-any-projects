@@ -74,4 +74,8 @@ public class Paquete implements Serializable {
 	}
 	
 	
+	public String toString(){
+		return this.nombreArchivo+" "+ this.offset;
+	}
+	
 }
