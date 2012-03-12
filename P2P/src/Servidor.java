@@ -1,24 +1,23 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 
-public class Servidor extends Thread{
+public class Servidor extends Thread
+{
+	private P2P principal;
 	
-	P2P principal;
-	int puerto;
-	ServerSocket serverSocket;
+	private int puerto;
+	
+	private ServerSocket serverSocket;
+	
 	static Object monitor = new Object();
 	
-	Hashtable<String, Paquete> paquetes;
+	private Hashtable<String, Paquete> paquetes;
 	
 	public Servidor( P2P principal, int puerto ) {
 		this.principal = principal;
@@ -38,20 +37,21 @@ public class Servidor extends Thread{
 			while(true){
 				synchronized (monitor) {
 					Socket socket = serverSocket.accept();
-					BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-					String tarea = in.readLine() ;
+					Data data = (Data) new ObjectInputStream(socket.getInputStream()).readObject();
+					System.out.println(puerto+" Recibo " + data);
+					String tarea = data.getTarea();
 					
 					if( tarea.equals(P2P.INSERTAR_ARCHIVO) ){
-						Paquete paquete = (Paquete) new ObjectInputStream(socket.getInputStream()).readObject();
-						paquetes.put( generarNombrePaquete(paquete), paquete);
+						Paquete p = data.getPaquete();
+						paquetes.put( generarNombrePaquete(p), p);
 					}
 					if( tarea.equals(P2P.CONSULTAR_LISTA_ARCHIVOS) ){
-						String hostRespuesta = in.readLine();
-						int puertoRespuesta = Integer.parseInt(in.readLine());
+						String hostRespuesta = data.getHostRespuesta();
+						int puertoRespuesta = data.getPuertoRespuesta();
 						consultarListaArchivos( hostRespuesta, puertoRespuesta );
 					}
 					else if( tarea.equals(P2P.RECIBIR_LISTA_ARCHIVOS) ){
-						Set<String> archivos = (Set<String>) new ObjectInputStream(socket.getInputStream()).readObject();
+						String archivos = data.getInformacionAdicional();
 						principal.recibirListaArchivo(archivos);
 					}
 					monitor.wait(100);
@@ -72,7 +72,7 @@ public class Servidor extends Thread{
 	
 	private void consultarListaArchivos( String host, int puerto ){
 		HashSet<String> archivos = new HashSet<String>();
-		for (Iterator iterator = ((Set<String>) paquetes).iterator(); iterator.hasNext();) {
+		for (Iterator iterator = paquetes.keySet().iterator(); iterator.hasNext();) {
 			archivos.add(paquetes.get(iterator.next()).getNombreArchivo());
 		}
 		new Cliente(host, puerto, P2P.RECIBIR_LISTA_ARCHIVOS, archivos);
