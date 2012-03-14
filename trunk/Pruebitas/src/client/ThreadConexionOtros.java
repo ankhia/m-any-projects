@@ -27,6 +27,8 @@ public class ThreadConexionOtros extends Thread {
 	{
 		this.hostDestino = host;
 		this.puertoDestino = puerto;
+		this.puertoOrigen = puertoOrigen;
+		this.hostOrigen = ipOrigen;
 		this.principal = principal;
 		this.socket =  new Socket(this.hostDestino , this.puertoDestino);
 		oos = new ObjectOutputStream(this.socket.getOutputStream());
