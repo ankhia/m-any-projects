@@ -6,6 +6,9 @@ import java.util.Vector;
 
 public class P2P 
 {
+	
+	public static final String TAREA_CONECTARSE="CONECTARSE";
+	
 
 	private Vector<ThreadConexionOtros> manejadorClientes;
 	
@@ -17,7 +20,7 @@ public class P2P
 	{
 		manejadorClientes = new Vector<ThreadConexionOtros>();
 		
-		escharInfo = new EscuchaInfo();
+		escharInfo = new EscuchaInfo(this);
 		new Thread(escharInfo).start();
 		
 		escucharBroadCast = new EscuchaBroadCast(escharInfo.PUERTO_ESCUCHA, this);		

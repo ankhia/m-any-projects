@@ -1,8 +1,6 @@
 package client;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,9 +11,12 @@ public class EscuchaInfo implements Runnable
 	public static int PUERTO_ESCUCHA = 9990;
 	
 	private ServerSocket serverSocket;
+
+	private P2P principal;
 	
-	public EscuchaInfo() throws IOException
+	public EscuchaInfo(P2P principal) throws IOException
 	{
+		this.principal = principal;
 		serverSocket = new ServerSocket(PUERTO_ESCUCHA);
 	}
 	
@@ -36,8 +37,11 @@ public class EscuchaInfo implements Runnable
 						{
 							while(true)
 							{
-								//if(ois.readObject()!=null)
-									System.out.println((String)ois.readObject());
+								Data d = (Data)ois.readObject();
+								System.out.println(d);
+								if(d.getTarea().equals(P2P.TAREA_CONECTARSE)){
+									System.out.println("p2p.agregarConexion ");
+								}
 							} 
 						}
 						catch (Exception e) 

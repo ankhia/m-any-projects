@@ -35,7 +35,7 @@ public class ThreadConexionOtros extends Thread {
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 			String linea=null;
 			while((linea=bf.readLine())!=null){
-				oos.writeObject(linea);
+				oos.writeObject(new Data(linea));
 				oos.flush();
 			}
 		}
