@@ -36,7 +36,7 @@ public class EscuchaInfo implements Runnable
 						{
 							while(true)
 							{
-								if(ois.readObject()!=null)
+								//if(ois.readObject()!=null)
 									System.out.println((String)ois.readObject());
 							} 
 						}
