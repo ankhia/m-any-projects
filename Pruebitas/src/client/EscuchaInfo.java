@@ -2,20 +2,17 @@ package client;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Vector;
 
 public class EscuchaInfo implements Runnable
 {
 
 	public static int PUERTO_ESCUCHA = 9990;
 	
-	private Vector<ManejadorCliente> manejardorClientes;
-	
 	public EscuchaInfo()
 	{
-		manejardorClientes = new Vector<ManejadorCliente>();
 	}
 	
+	//Parte que se queda escuchando a los otros 
 	public void run() 
 	{
 		try 
@@ -24,7 +21,7 @@ public class EscuchaInfo implements Runnable
 			while(true)
 			{
 					Socket socket = serverSocket.accept();
-					manejardorClientes.add(new ManejadorCliente(socket));
+					
 			}
 		}
 		catch (Exception e) {
