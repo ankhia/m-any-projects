@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Vector;
 
-public class P2P {
+public class P2P 
+{
 
 	private Vector<ThreadConexionOtros> manejadorClientes;
 	
