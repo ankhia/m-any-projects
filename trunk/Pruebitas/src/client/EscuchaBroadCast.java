@@ -78,7 +78,7 @@ public class EscuchaBroadCast implements Runnable {
 					String aux[] = datoLlegaron.split(";");
 					String ipDestino = aux[0];
 					int puertoDestino = Integer.parseInt(aux[1]);
-					if(!ipDestino.equalsIgnoreCase(ipOrigen) && puertoDestino != puertoOrigen)
+					if(!ipDestino.equalsIgnoreCase(ipOrigen))
 						principal.agregarConexionP2P(ipDestino, puertoDestino);
 					else
 						System.out.println("No agrego conexion a mi mismo ");
