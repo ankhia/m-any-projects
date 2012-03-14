@@ -27,11 +27,26 @@ public class EscuchaInfo implements Runnable
 			while(true)
 			{
 				Socket s = serverSocket.accept();
-				ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-				while(true){
-					if(ois.readObject()!=null)
-						System.out.println((String)ois.readObject());
-				}
+				final ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+				new Thread(new Runnable() 
+				{
+					public void run()
+					{
+						try 
+						{
+							while(true)
+							{
+								if(ois.readObject()!=null)
+									System.out.println((String)ois.readObject());
+							} 
+						}
+						catch (Exception e) 
+						{
+							e.printStackTrace();
+						}
+					}
+				}).start();
+				
 			}
 		}
 		catch (Exception e) {
