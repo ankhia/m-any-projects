@@ -9,9 +9,13 @@ import java.net.UnknownHostException;
 
 public class ThreadConexionOtros extends Thread {
 
-	private String host;
+	private String hostDestino;
 	
-	private int puerto;
+	private int puertoDestino;
+	
+	private String hostOrigen;
+	
+	private int puertoOrigen;
 	
 	private Socket socket;
 	
@@ -19,12 +23,12 @@ public class ThreadConexionOtros extends Thread {
 	
 	private ObjectOutputStream oos;
 	
-	public ThreadConexionOtros(String host, int puerto, P2P principal) throws UnknownHostException, IOException
+	public ThreadConexionOtros(String host, int puerto, P2P principal, String ipOrigen, int puertoOrigen) throws UnknownHostException, IOException
 	{
-		this.host = host;
-		this.puerto = puerto;
+		this.hostDestino = host;
+		this.puertoDestino = puerto;
 		this.principal = principal;
-		this.socket =  new Socket(this.host , this.puerto);
+		this.socket =  new Socket(this.hostDestino , this.puertoDestino);
 		oos = new ObjectOutputStream(this.socket.getOutputStream());
 	}
 	
@@ -35,7 +39,7 @@ public class ThreadConexionOtros extends Thread {
 			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 			String linea=null;
 			while((linea=bf.readLine())!=null){
-				oos.writeObject(new Data(linea));
+				oos.writeObject(new Data(linea, hostOrigen, puertoOrigen));
 				oos.flush();
 			}
 		}
