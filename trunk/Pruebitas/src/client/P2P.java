@@ -23,7 +23,7 @@ public class P2P {
 		new Thread(escucharBroadCast).start();
 	}
 	
-	public void agregarConexionP2P(String ipDestino, int puertoDestino) throws UnknownHostException, IOException
+	public synchronized void agregarConexionP2P(String ipDestino, int puertoDestino) throws UnknownHostException, IOException
 	{
 		System.out.println("Agrego el Host: " + ipDestino + " puerto " + puertoDestino );
 		ThreadConexionOtros t = new ThreadConexionOtros(ipDestino, puertoDestino, this);
