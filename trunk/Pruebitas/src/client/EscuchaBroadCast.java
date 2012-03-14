@@ -93,4 +93,22 @@ public class EscuchaBroadCast implements Runnable {
 		}
 	}
 
+	public String getIpOrigen() {
+		return ipOrigen;
+	}
+
+	public void setIpOrigen(String ipOrigen) {
+		this.ipOrigen = ipOrigen;
+	}
+
+	public int getPuertoOrigen() {
+		return puertoOrigen;
+	}
+
+	public void setPuertoOrigen(int puertoOrigen) {
+		this.puertoOrigen = puertoOrigen;
+	}
+
+	
+	
 }

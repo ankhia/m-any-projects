@@ -14,8 +14,10 @@ public class Data implements Serializable
 	public Data(){
 	}
 
-	public Data(String tarea){
+	public Data(String tarea, String hostOrigen, int puertoOrigen2){
 		this.tarea = tarea;
+		this.ipOrigen = hostOrigen;
+		this.puertoOrigen = puertoOrigen2;
 	}
 	
 	public String getTarea(){
