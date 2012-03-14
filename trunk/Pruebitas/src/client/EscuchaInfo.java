@@ -1,5 +1,9 @@
 package client;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -8,8 +12,11 @@ public class EscuchaInfo implements Runnable
 
 	public static int PUERTO_ESCUCHA = 9990;
 	
-	public EscuchaInfo()
+	private ServerSocket serverSocket;
+	
+	public EscuchaInfo() throws IOException
 	{
+		serverSocket = new ServerSocket(PUERTO_ESCUCHA);
 	}
 	
 	//Parte que se queda escuchando a los otros 
@@ -17,11 +24,11 @@ public class EscuchaInfo implements Runnable
 	{
 		try 
 		{
-			ServerSocket serverSocket = new ServerSocket(PUERTO_ESCUCHA);
 			while(true)
 			{
-					Socket socket = serverSocket.accept();
-					
+				Socket s = serverSocket.accept();
+				ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+				System.out.println((String)ois.readObject());
 			}
 		}
 		catch (Exception e) {
