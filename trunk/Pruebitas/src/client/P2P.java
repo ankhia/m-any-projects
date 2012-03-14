@@ -1,9 +1,12 @@
 package client;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.Vector;
 
 public class P2P {
 
+	private Vector<ThreadConexionOtros> manejadorClientes;
 	
 	private EscuchaInfo escharInfo;
 	
@@ -11,6 +14,8 @@ public class P2P {
 	
 	public P2P() throws IOException
 	{
+		manejadorClientes = new Vector<ThreadConexionOtros>();
+		
 		escharInfo = new EscuchaInfo();
 		new Thread(escharInfo).start();
 		
@@ -18,10 +23,12 @@ public class P2P {
 		new Thread(escucharBroadCast).start();
 	}
 	
-	
-	public void agregarConexionP2P(String ipDestino, int puertoDestino) {
-		// TODO Auto-generated method stub
-		
+	public void agregarConexionP2P(String ipDestino, int puertoDestino) throws UnknownHostException, IOException
+	{
+		System.out.println("Agrego el Host: " + ipDestino + " puerto " + puertoDestino );
+		ThreadConexionOtros t = new ThreadConexionOtros(ipDestino, puertoDestino, this);
+		t.start();
+		manejadorClientes.add(t);
 	}
 
 	public static void main(String[] args) 
