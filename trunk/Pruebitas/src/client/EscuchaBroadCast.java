@@ -64,12 +64,15 @@ public class EscuchaBroadCast implements Runnable {
 	{
 		try
 		{
-			DatagramSocket escucha = new DatagramSocket(PUERTO_BROADCAST);
-			while(true){
+			while(true)
+			{
+				System.out.println("Esperando BroadCast ");
+				DatagramSocket escucha = new DatagramSocket(PUERTO_BROADCAST);
 				DatagramPacket dgp = new DatagramPacket(new byte [TAMANIO_BYTES],TAMANIO_BYTES);
 				escucha.receive(dgp);
 				byte[] datos = dgp.getData();
 				String datoLlegaron  = new String(datos);
+				System.out.println("Recibi BroadCast " + datoLlegaron);
 				if(datoLlegaron.indexOf(";")!=-1)
 				{
 					String aux[] = datoLlegaron.split(";");
