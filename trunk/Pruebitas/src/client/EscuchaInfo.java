@@ -40,6 +40,7 @@ public class EscuchaInfo implements Runnable
 								Data d = (Data)ois.readObject();
 								System.out.println(d);
 								if(d.getTarea().equals(P2P.TAREA_CONECTARSE)){
+									principal.agregarConexionP2P(d.getIpOrigen(), d.getPuertoOrigen());
 									System.out.println("p2p.agregarConexion ");
 								}
 							} 
