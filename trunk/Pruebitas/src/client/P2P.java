@@ -25,6 +25,10 @@ public class P2P
 	
 	public static final String RECIBIR_CONSULTA_ARCHIVOS = "RECIBIR CONSULTA ARCHIVOS";
 
+	public static final String CONSULTAR_NODOS_ARCHIVO = "CONSULTAR NODOS ARCHIVO";
+
+	public static final String RESPUESTA_ARCHIVOS_NODOS = "RESPUESTA_ARCHIVOS_NODOS";
+
 	private Vector<ThreadConexionOtros> manejadorClientes;
 	
 	private EscuchaInfo escharInfo;
@@ -72,9 +76,8 @@ public class P2P
 			switch( op ){
 				case 1: insertarArchivo();break;
 				case 2: enviarOrdenConsultar(); break;
-				case 3: 
-					System.out.print("Nombre Archivo a eliminar: ");enviarOrdenEliminarArchivo(in.readLine());break;
-				case 4: break;
+				case 3: System.out.print("Nombre Archivo a eliminar: ");enviarOrdenEliminarArchivo(in.readLine());break;
+				case 4: System.out.print("Nombre Archivo a eliminar: ");enviarOrdenConsultaNodos(in.readLine());break;
 				case 5: break;
 			}
 			op = Integer.parseInt(in.readLine());
@@ -136,6 +139,19 @@ public class P2P
 			dataConsultar.setPuertoOrigen(getPuerto());
 			ThreadConexionOtros tc = (ThreadConexionOtros) manejadorClientes.get(i);
 			tc.enviarData(dataConsultar);
+		}
+	}
+	
+	private void enviarOrdenConsultaNodos(String nombreArchivo) throws IOException 
+	{
+		for(int i=0;i<manejadorClientes.size();++i){
+			ThreadConexionOtros t = manejadorClientes.get(i);
+			Data d = new Data();
+			d.setTarea(CONSULTAR_NODOS_ARCHIVO);
+			d.setIpOrigen(getHost());
+			d.setPuertoOrigen(getPuerto());
+			d.setNombreArchivo(nombreArchivo);
+			t.enviarData(d);
 		}
 	}
 	
@@ -233,9 +249,34 @@ public class P2P
 			for(String s : this.nombresArchivos){
 				System.out.println(s);
 			}
+			this.nombresArchivos.clear();
 		}if(contarCantSolic==-1){
 			System.out.println("No hay archivos aun en el sistema.");
 		}
 		--contarCantSolic;
+	}
+
+	public void consultarFragmentosPorNombreArchivo(String nombreArchivo, String hostOrigen, int puertoOrigen) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		for(String x : this.paquetesArchivos.keySet()){
+			sb.append(x);
+			sb.append(";");
+		}
+		
+		for(int i=0;i<this.manejadorClientes.size();++i){
+			ThreadConexionOtros t = manejadorClientes.get(i);
+			if(hostOrigen.equals(t.getHostDestino())){
+				Data d = new Data();
+				d.setIpOrigen(getHost());
+				d.setPuertoOrigen(getPuerto());
+				d.setTarea(RESPUESTA_ARCHIVOS_NODOS);
+				d.setNombreArchivo(sb.toString());
+				t.enviarData(d);
+			}
+		}
+	}
+
+	public void archivosPorNodo(String ipOrigen, String nombreArchivo,	int puertoOrigen) {
+		System.out.println("El nodo: "+ ipOrigen + " puerto : "+ puertoOrigen+ " tiene los siguiente archivos : " + nombreArchivo);
 	}
 }
