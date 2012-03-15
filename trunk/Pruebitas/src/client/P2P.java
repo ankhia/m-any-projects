@@ -133,12 +133,14 @@ public class P2P
 	
 	private void enviarOrdenConsultar(  ) throws IOException{
 		for (int i = 0; i < manejadorClientes.size(); i++) {
-			Data dataConsultar = new Data();
-			dataConsultar.setTarea(CONSULTAR_ARCHIVOS);
-			dataConsultar.setIpOrigen(getHost());
-			dataConsultar.setPuertoOrigen(getPuerto());
 			ThreadConexionOtros tc = (ThreadConexionOtros) manejadorClientes.get(i);
-			tc.enviarData(dataConsultar);
+			if(!tc.getHostDestino().equals(getHost())){
+				Data dataConsultar = new Data();
+				dataConsultar.setTarea(CONSULTAR_ARCHIVOS);
+				dataConsultar.setIpOrigen(getHost());
+				dataConsultar.setPuertoOrigen(getPuerto());
+				tc.enviarData(dataConsultar);
+			}
 		}
 	}
 	
@@ -211,7 +213,7 @@ public class P2P
 		}
 	}
 
-	public void consultarArchivos(String ipOrigen, int puertoOrigen) throws IOException {
+	public synchronized void consultarArchivos(String ipOrigen, int puertoOrigen) throws IOException {
 		HashSet<String> hashArchivos = new HashSet<String>(paquetesArchivos.keySet());
 		contarCantSolic = 0;
 		if(!ipOrigen.equals(getHost())){
