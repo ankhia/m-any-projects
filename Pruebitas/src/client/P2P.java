@@ -225,12 +225,14 @@ public class P2P
 					d.setHashArchivos(hashArchivos);
 					tc.enviarData(d);
 					contarCantSolic++;
+					
 				}else
 					System.out.println("No hay nodos diferentes a mi.");
 			}
 		}
 		else
 			System.out.println("El origen es igual al destino.");
+		System.out.println("Cantidad de solicitudes es: "+ contarCantSolic);
 		
 	}
 
