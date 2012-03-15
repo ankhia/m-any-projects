@@ -250,10 +250,14 @@ public class P2P
 				System.out.println(s);
 			}
 			this.nombresArchivos.clear();
+			contarCantSolic=0;
 		}if(contarCantSolic==-1){
 			System.out.println("No hay archivos aun en el sistema.");
+			this.nombresArchivos.clear();
+			contarCantSolic=0;
+		}else {
+			--contarCantSolic;
 		}
-		--contarCantSolic;
 	}
 
 	public void consultarFragmentosPorNombreArchivo(String nombreArchivo, String hostOrigen, int puertoOrigen) throws IOException {
