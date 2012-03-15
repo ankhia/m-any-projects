@@ -71,7 +71,7 @@ public class P2P
 
 			switch( op ){
 				case 1: insertarArchivo();break;
-				case 2: break;
+				case 2: enviarOrdenConsultar(); break;
 				case 3: 
 					System.out.print("Nombre Archivo a eliminar: ");enviarOrdenEliminarArchivo(in.readLine());break;
 				case 4: break;
