@@ -1,6 +1,7 @@
 package client;
 
 import java.io.Serializable;
+import java.util.HashSet;
 
 public class Data implements Serializable
 {
@@ -13,6 +14,8 @@ public class Data implements Serializable
 	private String nombreArchivo;
 	
 	private String codigoArchivo;
+	
+	private HashSet<String> hashArchivos;
 	
 	private int cantidadTotalFragmentos;
 	
@@ -103,5 +106,19 @@ public class Data implements Serializable
 
 	public String toString(){
 		return "Tarea: " + tarea + " IPOrigen " + ipOrigen + " PuertoOrigen " + puertoOrigen;
+	}
+
+	/**
+	 * @return the hashArchivos
+	 */
+	public HashSet<String> getHashArchivos() {
+		return hashArchivos;
+	}
+
+	/**
+	 * @param hashArchivos the hashArchivos to set
+	 */
+	public void setHashArchivos(HashSet<String> hashArchivos) {
+		this.hashArchivos = hashArchivos;
 	}
 }
