@@ -132,6 +132,7 @@ public class P2P
 	}
 	
 	private void enviarOrdenConsultar(  ) throws IOException{
+		contarCantSolic=0;
 		for (int i = 0; i < manejadorClientes.size(); i++) {
 			ThreadConexionOtros tc = (ThreadConexionOtros) manejadorClientes.get(i);
 			if(!tc.getHostDestino().equals(getHost())){
@@ -140,6 +141,7 @@ public class P2P
 				dataConsultar.setIpOrigen(getHost());
 				dataConsultar.setPuertoOrigen(getPuerto());
 				tc.enviarData(dataConsultar);
+				contarCantSolic++;
 			}
 		}
 	}
@@ -215,7 +217,6 @@ public class P2P
 
 	public synchronized void consultarArchivos(String ipOrigen, int puertoOrigen) throws IOException {
 		HashSet<String> hashArchivos = new HashSet<String>(paquetesArchivos.keySet());
-		contarCantSolic = 0;
 		if(!ipOrigen.equals(getHost())){
 			for (int i = 0; i < manejadorClientes.size(); i++) {
 				ThreadConexionOtros tc = (ThreadConexionOtros) manejadorClientes.get(i);
@@ -226,16 +227,12 @@ public class P2P
 					d.setTarea(RECIBIR_CONSULTA_ARCHIVOS);
 					d.setHashArchivos(hashArchivos);
 					tc.enviarData(d);
-					contarCantSolic++;
-					
 				}else
 					System.out.println("No hay nodos diferentes a mi.");
 			}
 		}
 		else
 			System.out.println("El origen es igual al destino.");
-		System.out.println("Cantidad de solicitudes es: "+ contarCantSolic);
-		
 	}
 
 	public synchronized void recibirConsultaArchivos( HashSet<String> nombreArchivos, String ipOrigen, int puertoOrigen) {
