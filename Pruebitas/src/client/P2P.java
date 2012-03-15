@@ -225,17 +225,16 @@ public class P2P
 					d.setHashArchivos(hashArchivos);
 					tc.enviarData(d);
 					contarCantSolic++;
-				}else{
-					System.out.println("noooooooooooooooooooooooo ");
-				}
+				}else
+					System.out.println("No hay nodos diferentes a mi.");
 			}
 		}
 		else
-			System.out.println("ESTE FUE EL MALOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+			System.out.println("El origen es igual al destino.");
 		
 	}
 
-	public void recibirConsultaArchivos( HashSet<String> nombreArchivos, String ipOrigen, int puertoOrigen) {
+	public synchronized void recibirConsultaArchivos( HashSet<String> nombreArchivos, String ipOrigen, int puertoOrigen) {
 		this.nombresArchivos.addAll(nombreArchivos);
 		System.out.println("Contador Solicitudes "+contarCantSolic);
 		if(contarCantSolic==0){
