@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.util.Enumeration;
 
 public class EscuchaBroadCast implements Runnable {
 
@@ -12,7 +13,7 @@ public class EscuchaBroadCast implements Runnable {
 
 	private final int TAMANIO_BYTES = 20;
 
-	private final String INTERFACE = "eth0";
+	private final String INTERFACE = "wlan0";
 
 	private String ipOrigen;
 
@@ -28,6 +29,14 @@ public class EscuchaBroadCast implements Runnable {
 	{
 		this.puertoOrigen = puertoOrigen;
 		this.principal = principal;
+		
+		Enumeration<NetworkInterface> e =NetworkInterface.getNetworkInterfaces();
+
+		while(e.hasMoreElements()){
+			NetworkInterface n = e.nextElement();
+			System.out.println("DisplayName "+n.getDisplayName());
+			System.out.println("Name " + n.getName());
+		}
 
 		if(NetworkInterface.getByName(INTERFACE).getInterfaceAddresses().size()>1)
 		{
