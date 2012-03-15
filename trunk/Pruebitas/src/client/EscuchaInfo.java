@@ -41,6 +41,9 @@ public class EscuchaInfo implements Runnable
 								System.out.println("Entrada de informacion => DATA " +d);
 								if(d.getTarea().equals(P2P.TAREA_CONECTARSE)){
 									principal.agregarConexionP2P(d.getIpOrigen(), d.getPuertoOrigen());
+								}else if(d.getTarea().equals(P2P.EVIAR_PARTE_ARCHIVO)){
+									//Recibiendo parte de archivo
+									principal.recibirPaqueteArchivo(d);
 								}
 							} 
 						}
