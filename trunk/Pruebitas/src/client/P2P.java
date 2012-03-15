@@ -253,26 +253,20 @@ public class P2P
 	}
 
 	public void consultarFragmentosPorNombreArchivo(String nombreArchivo, String hostOrigen, int puertoOrigen) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		for(String x : this.paquetesArchivos.keySet()){
-			sb.append(x);
-			sb.append(";");
-		}
-		
 		for(int i=0;i<this.manejadorClientes.size();++i){
 			ThreadConexionOtros t = manejadorClientes.get(i);
-			if(hostOrigen.equals(t.getHostDestino())){
+			if(hostOrigen.equals(t.getHostDestino())&& paquetesArchivos.get(nombreArchivo)!=null){
 				Data d = new Data();
 				d.setIpOrigen(getHost());
 				d.setPuertoOrigen(getPuerto());
 				d.setTarea(RESPUESTA_ARCHIVOS_NODOS);
-				d.setNombreArchivo(sb.toString());
+				d.setNombreArchivo(nombreArchivo );
 				t.enviarData(d);
 			}
 		}
 	}
 
 	public void archivosPorNodo(String ipOrigen, String nombreArchivo,	int puertoOrigen) {
-		System.out.println("El nodo: "+ ipOrigen + " puerto : "+ puertoOrigen+ " tiene los siguiente archivos : " + nombreArchivo);
+		System.out.println("El nodo: "+ ipOrigen + " puerto : "+ puertoOrigen+ " tiene fragmentos del archivo : " + nombreArchivo);
 	}
 }
