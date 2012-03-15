@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
@@ -15,7 +17,13 @@ public class P2P
 {
 	public static final String TAREA_CONECTARSE="CONECTARSE";
 	
-	public static final String EVIAR_PARTE_ARCHIVO="ENVIAR PARTE ARCHIVO";
+	public static final String ENVIAR_PARTE_ARCHIVO="ENVIAR PARTE ARCHIVO";
+	
+	public static final String ELIMINAR_ARCHIVO="ELIMINAR ARCHIVO";
+	
+	public static final String CONSULTAR_ARCHIVOS = "CONSULTAR ARCHIVOS";
+	
+	public static final String RECIBIR_CONSULTA_ARCHIVOS = "RECIBIR CONSULTA ARCHIVOS";
 
 	private Vector<ThreadConexionOtros> manejadorClientes;
 	
@@ -25,11 +33,16 @@ public class P2P
 	
 	private FragmentadorArchivo fragmentadorArchivos;
 	
-	
 	private Hashtable<String, ArrayList<Data>> paquetesArchivos;
+
+	private HashSet<String> nombresArchivos;
+	
+	private int contarCantSolic;
 	
 	public P2P() throws IOException
 	{
+		nombresArchivos = new HashSet<String>();
+		
 		paquetesArchivos = new Hashtable<String, ArrayList<Data>>();
 		
 		fragmentadorArchivos = new FragmentadorArchivo(this);
@@ -59,7 +72,8 @@ public class P2P
 			switch( op ){
 				case 1: insertarArchivo();break;
 				case 2: break;
-				case 3: break;
+				case 3: 
+					System.out.print("Nombre Archivo a eliminar: ");enviarOrdenEliminarArchivo(in.readLine());break;
 				case 4: break;
 				case 5: break;
 			}
@@ -98,6 +112,31 @@ public class P2P
 			fragmentadorArchivos.procesarArchivo(chooser.getSelectedFile());
 		}
 		jf.dispose();
+	}
+	
+	private void enviarOrdenEliminarArchivo( String nombreArchivoEliminar ) throws IOException{
+		
+		for (int i = 0; i < manejadorClientes.size(); i++) {
+			ThreadConexionOtros tc = (ThreadConexionOtros) manejadorClientes.get(i);
+			Data dataEliminarArchivo = new Data( ); 
+			dataEliminarArchivo.setTarea(P2P.ELIMINAR_ARCHIVO);
+			dataEliminarArchivo.setIpOrigen(getHost());
+			dataEliminarArchivo.setPuertoOrigen(getPuerto());
+			dataEliminarArchivo.setNombreArchivo(nombreArchivoEliminar);
+			tc.enviarData(dataEliminarArchivo);
+		}
+		eliminarArchivo(nombreArchivoEliminar);
+	}
+	
+	private void enviarOrdenConsultar(  ) throws IOException{
+		for (int i = 0; i < manejadorClientes.size(); i++) {
+			Data dataConsultar = new Data();
+			dataConsultar.setTarea(CONSULTAR_ARCHIVOS);
+			dataConsultar.setIpOrigen(getHost());
+			dataConsultar.setPuertoOrigen(getPuerto());
+			ThreadConexionOtros tc = (ThreadConexionOtros) manejadorClientes.get(i);
+			tc.enviarData(dataConsultar);
+		}
 	}
 	
 	public synchronized void enviarPaqueteAHostAlAzar(Data data) throws IOException
@@ -147,4 +186,50 @@ public class P2P
 		}
 	}
 
+	public void eliminarArchivo(String nombreArchivo) {
+		if(paquetesArchivos.get(nombreArchivo)!=null){
+			paquetesArchivos.remove(nombreArchivo);
+			System.out.println("El archivo "+nombreArchivo+" fue removido");
+		}else{
+			System.out.println("No existe el archivo");
+		}
+	}
+
+	public void consultarArchivos(String ipOrigen, int puertoOrigen) throws IOException {
+//		StringBuilder sb = new StringBuilder();
+//		Set<String> set = paquetesArchivos.keySet();
+//		for (String x : set) {
+//			sb.append(x);
+//			sb.append(";");
+//		}
+//		
+		HashSet<String> hashArchivos = new HashSet<String>(paquetesArchivos.keySet());
+		contarCantSolic = 0;
+		if(!ipOrigen.equals(getHost()) && puertoOrigen != getPuerto()){
+			for (int i = 0; i < manejadorClientes.size(); i++) {
+				ThreadConexionOtros tc = (ThreadConexionOtros) manejadorClientes.get(i);
+				if(tc.getHostDestino().equals(ipOrigen) && tc.getPuertoDestino() == puertoOrigen){
+					Data d = new Data();
+					d.setIpOrigen(getHost());
+					d.setPuertoOrigen(getPuerto());
+					d.setTarea(RECIBIR_CONSULTA_ARCHIVOS);
+					d.setHashArchivos(hashArchivos);
+					tc.enviarData(d);
+					contarCantSolic++;
+				}
+			}
+		}
+		
+	}
+
+	public void recibirConsultaArchivos( HashSet<String> nombreArchivos, String ipOrigen, int puertoOrigen) {
+		--contarCantSolic;
+		this.nombresArchivos.addAll(nombreArchivos);
+		if(contarCantSolic==0){
+			System.out.println("Los Archivos en el sistemas son :");
+			for(String s : this.nombresArchivos){
+				System.out.println(s);
+			}
+		}
+	}
 }

@@ -34,7 +34,7 @@ public class FragmentadorArchivo {
 					data.setOffset(offset);
 					data.setNombreArchivo(archivo.getName());
 					data.setCodigoArchivo(archivo.getName()+"_"+offset);
-					data.setTarea(P2P.EVIAR_PARTE_ARCHIVO);
+					data.setTarea(P2P.ENVIAR_PARTE_ARCHIVO);
 					data.setIpOrigen(principal.getHost());
 					data.setPuertoOrigen(principal.getPuerto());
 					fragmentacionArchivo.add(data);
