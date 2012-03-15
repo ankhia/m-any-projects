@@ -206,7 +206,7 @@ public class P2P
 		HashSet<String> hashArchivos = new HashSet<String>(paquetesArchivos.keySet());
 		System.out.println("Hash Archivos " + hashArchivos);
 		contarCantSolic = 0;
-		if(!ipOrigen.equals(getHost()) && puertoOrigen != getPuerto()){
+		if(!ipOrigen.equals(getHost())){
 			for (int i = 0; i < manejadorClientes.size(); i++) {
 				ThreadConexionOtros tc = (ThreadConexionOtros) manejadorClientes.get(i);
 				if(tc.getHostDestino().equals(ipOrigen) && tc.getPuertoDestino() == puertoOrigen){
@@ -217,11 +217,14 @@ public class P2P
 					d.setHashArchivos(hashArchivos);
 					tc.enviarData(d);
 					contarCantSolic++;
+					System.out.println("siiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
 				}else{
 					System.out.println("noooooooooooooooooooooooo ");
 				}
 			}
 		}
+		else
+			System.out.println("ESTE FUE EL MALOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 		
 	}
 
