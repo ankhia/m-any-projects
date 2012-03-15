@@ -77,8 +77,8 @@ public class P2P
 				case 1: insertarArchivo();break;
 				case 2: enviarOrdenConsultar(); break;
 				case 3: System.out.print("Nombre Archivo a eliminar: ");enviarOrdenEliminarArchivo(in.readLine());break;
-				case 4: System.out.print("Nombre Archivo a eliminar: ");enviarOrdenConsultaNodos(in.readLine());break;
-				case 5: break;
+				case 4: break;
+				case 5: System.out.print("Nombre Archivo a consultar en nodos: ");enviarOrdenConsultaNodos(in.readLine());break;
 			}
 			op = Integer.parseInt(in.readLine());
 		}while(op!=-1);
