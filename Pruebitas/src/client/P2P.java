@@ -212,13 +212,6 @@ public class P2P
 	}
 
 	public void consultarArchivos(String ipOrigen, int puertoOrigen) throws IOException {
-//		StringBuilder sb = new StringBuilder();
-//		Set<String> set = paquetesArchivos.keySet();
-//		for (String x : set) {
-//			sb.append(x);
-//			sb.append(";");
-//		}
-//		
 		HashSet<String> hashArchivos = new HashSet<String>(paquetesArchivos.keySet());
 		contarCantSolic = 0;
 		if(!ipOrigen.equals(getHost())){
@@ -244,14 +237,14 @@ public class P2P
 
 	public void recibirConsultaArchivos( HashSet<String> nombreArchivos, String ipOrigen, int puertoOrigen) {
 		this.nombresArchivos.addAll(nombreArchivos);
+		System.out.println("Contador Solicitudes "+contarCantSolic);
 		if(contarCantSolic==0){
 			System.out.println("Los Archivos en el sistemas son :");
 			for(String s : this.nombresArchivos){
 				System.out.println(s);
 			}
 			this.nombresArchivos.clear();
-			contarCantSolic=0;
-		}if(contarCantSolic==-1){
+		}else if(contarCantSolic==-1){
 			System.out.println("No hay archivos aun en el sistema.");
 			this.nombresArchivos.clear();
 			contarCantSolic=0;
