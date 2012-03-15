@@ -12,6 +12,8 @@ public class Data implements Serializable
 	
 	private String nombreArchivo;
 	
+	private String codigoArchivo;
+	
 	private int cantidadTotalFragmentos;
 	
 	private int offset;
@@ -81,6 +83,22 @@ public class Data implements Serializable
 
 	public void setDatos(byte[] datos) {
 		this.datos = datos;
+	}
+	
+	public String getCodigoArchivo() {
+		return codigoArchivo;
+	}
+
+	public void setCodigoArchivo(String codigoArchivo) {
+		this.codigoArchivo = codigoArchivo;
+	}
+
+	public int getCantidadTotalFragmentos() {
+		return cantidadTotalFragmentos;
+	}
+
+	public void setCantidadTotalFragmentos(int cantidadTotalFragmentos) {
+		this.cantidadTotalFragmentos = cantidadTotalFragmentos;
 	}
 
 	public String toString(){
