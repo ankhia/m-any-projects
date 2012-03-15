@@ -228,12 +228,13 @@ public class P2P
 
 	public void recibirConsultaArchivos( HashSet<String> nombreArchivos, String ipOrigen, int puertoOrigen) {
 		this.nombresArchivos.addAll(nombreArchivos);
-		System.out.println("contarCanti SOlicitau " + contarCantSolic);
 		if(contarCantSolic==0){
 			System.out.println("Los Archivos en el sistemas son :");
 			for(String s : this.nombresArchivos){
 				System.out.println(s);
 			}
+		}if(contarCantSolic==-1){
+			System.out.println("No hay archivos aun en el sistema.");
 		}
 		--contarCantSolic;
 	}
