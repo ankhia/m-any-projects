@@ -235,8 +235,9 @@ public class P2P
 			System.out.println("El origen es igual al destino.");
 	}
 
-	public synchronized void recibirConsultaArchivos( HashSet<String> nombreArchivos, String ipOrigen, int puertoOrigen) {
+	public void recibirConsultaArchivos( HashSet<String> nombreArchivos, String ipOrigen, int puertoOrigen) {
 		this.nombresArchivos.addAll(nombreArchivos);
+		contarCantSolic--;
 		System.out.println("Contador Solicitudes "+contarCantSolic);
 		if(contarCantSolic==0){
 			System.out.println("Los Archivos en el sistemas son :");
@@ -247,9 +248,8 @@ public class P2P
 		}else if(contarCantSolic==-1){
 			System.out.println("No hay archivos aun en el sistema.");
 			this.nombresArchivos.clear();
-			contarCantSolic=1;
+			contarCantSolic=0;
 		}
-		contarCantSolic--;
 	}
 
 	public void consultarFragmentosPorNombreArchivo(String nombreArchivo, String hostOrigen, int puertoOrigen) throws IOException {
