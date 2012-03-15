@@ -32,6 +32,8 @@ public class ThreadConexionOtros extends Thread {
 		this.principal = principal;
 		this.socket =  new Socket(this.hostDestino , this.puertoDestino);
 		oos = new ObjectOutputStream(this.socket.getOutputStream());
+		
+		enviarData(new Data(P2P.TAREA_CONECTARSE, this.hostOrigen, this.puertoOrigen));
 	}
 	
 	public void run()
@@ -49,4 +51,27 @@ public class ThreadConexionOtros extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+	public void enviarData(Data data ) throws IOException{
+		System.out.println("Envio Data "+ data);
+		oos.writeObject(data);
+		oos.flush();
+	}
+
+	public String getHostDestino() {
+		return hostDestino;
+	}
+
+	public void setHostDestino(String hostDestino) {
+		this.hostDestino = hostDestino;
+	}
+
+	public int getPuertoDestino() {
+		return puertoDestino;
+	}
+
+	public void setPuertoDestino(int puertoDestino) {
+		this.puertoDestino = puertoDestino;
+	}
+	
 }
