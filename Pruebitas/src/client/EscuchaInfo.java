@@ -38,10 +38,9 @@ public class EscuchaInfo implements Runnable
 							while(true)
 							{
 								Data d = (Data)ois.readObject();
-								System.out.println(d);
+								System.out.println("Entrada de informacion => DATA " +d);
 								if(d.getTarea().equals(P2P.TAREA_CONECTARSE)){
 									principal.agregarConexionP2P(d.getIpOrigen(), d.getPuertoOrigen());
-									System.out.println("p2p.agregarConexion ");
 								}
 							} 
 						}
@@ -51,12 +50,10 @@ public class EscuchaInfo implements Runnable
 						}
 					}
 				}).start();
-				
 			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 }

@@ -62,16 +62,8 @@ public class ThreadConexionOtros extends Thread {
 		return hostDestino;
 	}
 
-	public void setHostDestino(String hostDestino) {
-		this.hostDestino = hostDestino;
-	}
-
 	public int getPuertoDestino() {
 		return puertoDestino;
-	}
-
-	public void setPuertoDestino(int puertoDestino) {
-		this.puertoDestino = puertoDestino;
 	}
 	
 }
