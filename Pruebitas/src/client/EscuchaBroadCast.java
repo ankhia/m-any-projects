@@ -11,7 +11,7 @@ public class EscuchaBroadCast implements Runnable {
 
 	private final int PUERTO_BROADCAST = 55557;
 
-	private int tamnioBytes;
+	private final int TAMANIO_BYTES=18;
 
 	private final String INTERFACE = "wlan0";
 
@@ -63,9 +63,9 @@ public class EscuchaBroadCast implements Runnable {
 		DatagramSocket enviador = new DatagramSocket();
 		enviador.setBroadcast(true);
 		String mensaje  = ipOrigen+";"+puertoOrigen; 
-		tamnioBytes = mensaje.getBytes().length;
+		System.out.println("Tamanio Mensaje en Bytes:" + mensaje.getBytes().length);
 		byte [] dato = mensaje.getBytes();
-		DatagramPacket dgp = new DatagramPacket(dato, tamnioBytes, InetAddress.getByName(ipBroadCast), PUERTO_BROADCAST);
+		DatagramPacket dgp = new DatagramPacket(dato, TAMANIO_BYTES, InetAddress.getByName(ipBroadCast), PUERTO_BROADCAST);
 		enviador.send(dgp);
 		System.out.println("Envio BroadCast ");
 	}
@@ -78,7 +78,7 @@ public class EscuchaBroadCast implements Runnable {
 			while(true)
 			{
 				System.out.println("Esperando BroadCast ");
-				DatagramPacket dgp = new DatagramPacket(new byte [tamnioBytes],tamnioBytes);
+				DatagramPacket dgp = new DatagramPacket(new byte [TAMANIO_BYTES],TAMANIO_BYTES);
 				escucha.receive(dgp);
 				byte[] datos = dgp.getData();
 				String datoLlegaron  = new String(datos);
