@@ -217,6 +217,8 @@ public class P2P
 					d.setHashArchivos(hashArchivos);
 					tc.enviarData(d);
 					contarCantSolic++;
+				}else{
+					System.out.println("noooooooooooooooooooooooo ");
 				}
 			}
 		}
