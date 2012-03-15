@@ -50,6 +50,10 @@ public class EscuchaInfo implements Runnable
 									principal.consultarArchivos( d.getIpOrigen(), d.getPuertoOrigen() );
 								}else if(d.getTarea().equals(P2P.RECIBIR_CONSULTA_ARCHIVOS)){
 									principal.recibirConsultaArchivos( d.getHashArchivos() , d.getIpOrigen(), d.getPuertoOrigen());
+								}else if(d.getTarea().equals(P2P.CONSULTAR_NODOS_ARCHIVO)){
+									principal.consultarFragmentosPorNombreArchivo(d.getNombreArchivo(),d.getIpOrigen(), d.getPuertoOrigen());
+								}else if(d.getTarea().equals(P2P.RESPUESTA_ARCHIVOS_NODOS)){
+									principal.archivosPorNodo(d.getIpOrigen(), d.getNombreArchivo(), d.getPuertoOrigen());
 								}
 							} 
 						}
