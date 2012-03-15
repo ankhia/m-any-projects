@@ -40,12 +40,13 @@ public class ThreadConexionOtros extends Thread {
 	{
 		try {
 			//Salida
-			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-			String linea=null;
-			while((linea=bf.readLine())!=null){
-				oos.writeObject(new Data(linea, hostOrigen, puertoOrigen));
-				oos.flush();
-			}
+//			BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+//			String linea=null;
+//			while((linea=bf.readLine())!=null){
+//				oos.writeObject(new Data(linea, hostOrigen, puertoOrigen));
+//				oos.flush();
+//			}
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
