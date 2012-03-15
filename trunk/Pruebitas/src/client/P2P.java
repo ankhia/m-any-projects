@@ -42,9 +42,7 @@ public class P2P
 		escucharBroadCast = new EscuchaBroadCast(escharInfo.PUERTO_ESCUCHA, this);		
 		new Thread(escucharBroadCast).start();
 		
-		enviarPaqueteAHostAlAzar(null);
 		menu();
-		
 	}
 	
 	private void menu() throws NumberFormatException, IOException
