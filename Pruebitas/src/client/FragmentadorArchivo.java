@@ -47,7 +47,7 @@ public class FragmentadorArchivo {
 			
 			for(int i=0;i<fragmentacionArchivo.size();++i){
 				Data data = fragmentacionArchivo.get(i);
-				data.setFragmentos(fragmentacionArchivo.size()-1);
+				data.setFragmentos(fragmentacionArchivo.size());
 				principal.enviarPaqueteAHostAlAzar(data);
 			}
 			
