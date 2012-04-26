@@ -13,7 +13,7 @@ public class EscuchaBroadCast implements Runnable {
 
 	private final int TAMANIO_BYTES=18;
 
-	private final String INTERFACE = "wlan0";
+	private final String INTERFACE = "net4";
 
 	private String ipOrigen;
 

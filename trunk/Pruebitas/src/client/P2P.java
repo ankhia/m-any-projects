@@ -1,8 +1,12 @@
 package client;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -77,11 +81,44 @@ public class P2P
 				case 1: insertarArchivo();break;
 				case 2: enviarOrdenConsultar(); break;
 				case 3: System.out.print("Nombre Archivo a eliminar: ");enviarOrdenEliminarArchivo(in.readLine());break;
-				case 4: break;
+				case 4: System.out.print("Nombre Archivo que desea consultar: ");consultarContenidoArchivo(in.readLine());break;
 				case 5: System.out.print("Nombre Archivo a consultar en nodos: ");enviarOrdenConsultaNodos(in.readLine());break;
 			}
 			op = Integer.parseInt(in.readLine());
 		}while(op!=-1);
+	}
+
+	private void consultarContenidoArchivo(String nombreArchivo) throws IOException {
+		if(this.paquetesArchivos.get(nombreArchivo)!= null){
+			ArrayList<Data> a = this.paquetesArchivos.get(nombreArchivo);
+			if(a.size()>0){
+				Data dato = a.get(0);
+				int cantidadFragmentos = dato.getFragmentos();
+				if(cantidadFragmentos==(a.size())){
+					System.out.println("Tengo todos los fragmentos del archivo");
+					byte[] ar = new byte[cantidadFragmentos*FragmentadorArchivo.MAXIMO_TAMANIO_BYTES];
+					int cont = 0;
+					for(int i=0;i<a.size();++i){
+						byte[] aux = a.get(i).getDatos();
+						for(int j=0;j<aux.length;++j)
+							ar[cont++]=aux[j];
+					}
+					
+					File archivoSalida = new File(dato.getNombreArchivo());
+					archivoSalida.createNewFile();
+					FileOutputStream fos = new FileOutputStream(archivoSalida);
+					fos.write(ar);
+					fos.flush();
+					fos.close();
+				}else{
+					System.out.println("No tengo la cantidad completa de fragmentos");
+				}
+			}else{
+				System.out.println("No tengo fragmentos del archivo");
+			}
+		}else{
+			System.out.println("No tengo fragmentos del archivo");
+		}
 	}
 
 	public synchronized void agregarConexionP2P(String ipDestino, int puertoDestino) throws UnknownHostException, IOException
@@ -103,7 +140,7 @@ public class P2P
 
 	private void insertarArchivo()
 	{
-		JFileChooser chooser = new JFileChooser();
+		JFileChooser chooser = new JFileChooser("C:\\Users\\Milena\\Desktop");
 		chooser.setDialogTitle("choose");
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		
