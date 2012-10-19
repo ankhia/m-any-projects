@@ -1,26 +1,39 @@
 /** Add css rules here for your application. */
-
-
 /** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+.estilo-login {
+	background: #1F4983;
+	-moz-border-radius: 15px 55px 5px;
+	-webkit-border-radius: 15px 55px 5px;
+	color: #FFFFFF;
+	opacity: 0.88;
 }
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
+.estilo-button-login {
+  		font-size:10px;
+        font-family:Verdana,Helvetica;
+        font-weight:bold;
+        color:white;
+        background:#638cb5;
+        border:0px;
+        width:80px;
+        height:19px;
 }
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
+.estilo-header-principal{
+	
 }
 
-.style-Label{
+.estilo-backgroun-login{
+	float: left;
+	text-align: left;
+	margin-top: 5px;
+	padding: 250px;
+	margin: 0;
+	background: url('NewBeginningWow.jpg');
+	background-repeat: no-repeat;
+}
+
+	.style-Label {
 	font-size: 12pt;
 	color: black;
 }
@@ -29,15 +42,10 @@ h1 {
 	font-size: 13pt;
 	color: red;
 }
-.dialogVPanel {
-  margin: 5px;
-}
+
+
 
 .serverResponseLabelError {
-  color: red;
+	color: red;
 }
 
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
-}

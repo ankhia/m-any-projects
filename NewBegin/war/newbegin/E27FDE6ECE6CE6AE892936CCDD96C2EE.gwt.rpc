@@ -1,0 +1,15 @@
+com.client.GreetingService, false, false, false, false, _, 3868261734
+com.client.bean.Characters, true, true, false, false, com.client.bean.Characters/2248265087, 2248265087
+[Lcom.client.bean.Characters;, true, true, false, false, [Lcom.client.bean.Characters;/3405597886, 3405597886
+com.client.bean.PersonajesCuenta, true, true, false, false, com.client.bean.PersonajesCuenta/4061725784, 4061725784
+[Lcom.client.bean.PersonajesCuenta;, true, true, false, false, [Lcom.client.bean.PersonajesCuenta;/3709279057, 3709279057
+com.client.bean.Usuario, true, true, true, true, com.client.bean.Usuario/3195948483, 3195948483
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true, true, true, true, com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533, 3936916533
+com.google.gwt.user.client.rpc.RpcTokenException, true, true, false, false, com.google.gwt.user.client.rpc.RpcTokenException/2345075298, 2345075298
+com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.gwt.user.client.rpc.XsrfToken/4254043109, 4254043109
+java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
+java.lang.IllegalArgumentException, true, true, false, false, java.lang.IllegalArgumentException/1755012560, 1755012560
+java.lang.NumberFormatException, true, true, false, false, java.lang.NumberFormatException/3305228476, 3305228476
+java.lang.RuntimeException, true, false, true, false, java.lang.RuntimeException/515124647, 515124647
+java.lang.String, true, true, true, true, java.lang.String/2004016611, 2004016611
+java.lang.Throwable, true, false, true, false, java.lang.Throwable/2953622131, 2953622131
