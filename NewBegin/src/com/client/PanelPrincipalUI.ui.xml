@@ -1,0 +1,37 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+		.style_menu_izq {
+			border: 10px black;
+			background-color: firebrick;
+		}
+		.style-header {
+			color: White;
+			border: lightgray;
+			vertical-align: middle;
+			background-color: Black;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<g:DockPanel width="823px" height="682px" ui:field="panelDock" verticalAlignment="ALIGN_MIDDLE">
+			<g:Dock direction="NORTH">
+				<g:Label text="Bienvenido a New Beginning Wow" height="97px" ui:field="lblEncabezado" horizontalAlignment="ALIGN_CENTER" styleName="{style.style-header}" />
+			</g:Dock>
+			<g:Dock direction="WEST" width="10">
+				<g:VerticalPanel height="109px" spacing="1" styleName="{style.style_menu_izq}" width="167px" borderWidth="5" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER" ui:field="panelMenu">
+					<g:Button ui:field="btnCambiarClave" text="Cambiar Clave" width="139px" height="31px"/>
+					<g:Button ui:field="btnRegistrarEmail">Registrar Email</g:Button>
+				</g:VerticalPanel>
+			</g:Dock>
+			<g:Dock direction="CENTER">
+				<g:VerticalPanel height="583px" width="456px" ui:field="panelCenter"/>
+			</g:Dock>
+		</g:DockPanel>
+	
+		
+	</g:HTMLPanel>
+</ui:UiBinder> 
