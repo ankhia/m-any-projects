@@ -1,7 +1,9 @@
 /** Add css rules here for your application. */
 /** Example rules used by the template application (remove for your app) */
+	
+
 .estilo-login {
-	background: #1F4983;
+	background: #1F4983 ;
 	-moz-border-radius: 15px 55px 5px;
 	-webkit-border-radius: 15px 55px 5px;
 	color: #FFFFFF;
@@ -20,17 +22,18 @@
 }
 
 .estilo-header-principal{
-	
+	opacity: 0.88;
 }
 
+#body-bg {background: #160005 url(fondo1.jpg) 50% 0 no-repeat;}
+
 .estilo-backgroun-login{
-	float: left;
-	text-align: left;
-	margin-top: 5px;
-	padding: 250px;
-	margin: 0;
-	background: url('NewBeginningWow.jpg');
-	background-repeat: no-repeat;
+	
+
+	width: 700px;
+	height: 800px;
+	
+	background: url('fondo1.jpg') no-repeat center center fixed;
 }
 
 	.style-Label {
